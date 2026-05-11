@@ -57,9 +57,6 @@ pipeline {
         }
 
         stage('Deploy Dev') {
-            when {
-                expression { env.BRANCH_NAME == 'develop' }
-            }
             steps {
                 sh """
                     helm upgrade --install fastapi-dev ${CHART_PATH} \
@@ -74,9 +71,6 @@ pipeline {
         }
 
         stage('Deploy QA') {
-            when {
-                expression { env.BRANCH_NAME == 'qa' }
-            }
             steps {
                 sh """
                     helm upgrade --install fastapi-qa ${CHART_PATH} \
@@ -91,9 +85,6 @@ pipeline {
         }
 
         stage('Deploy Staging') {
-            when {
-                expression { env.BRANCH_NAME == 'staging' }
-            }
             steps {
                 sh """
                     helm upgrade --install fastapi-staging ${CHART_PATH} \
@@ -108,18 +99,12 @@ pipeline {
         }
 
         stage('Approve Production') {
-            when {
-                expression { env.BRANCH_NAME == 'master' }
-            }
             steps {
                 input message: 'Deploy to production?', ok: 'Deploy'
             }
         }
 
         stage('Deploy Production') {
-            when {
-                expression { env.BRANCH_NAME == 'master' }
-            }
             steps {
                 sh """
                     helm upgrade --install fastapi-prod ${CHART_PATH} \
