@@ -19,6 +19,13 @@ pipeline {
             }
         }
 
+        stage('Debug Branch') {
+            steps {
+                echo "BRANCH_NAME=${env.BRANCH_NAME}"
+                sh 'git branch --show-current || true'
+            }
+        }
+
         stage('Build Images') {
             steps {
                 sh "docker build -t ${MOVIE_IMAGE}:${IMAGE_TAG} ./movie-service"
@@ -47,7 +54,7 @@ pipeline {
 
         stage('Deploy Dev') {
             when {
-                branch 'develop'
+                expression { env.BRANCH_NAME == 'develop' }
             }
             steps {
                 sh """
@@ -64,7 +71,7 @@ pipeline {
 
         stage('Deploy QA') {
             when {
-                branch 'qa'
+                expression { env.BRANCH_NAME == 'qa' }
             }
             steps {
                 sh """
@@ -81,7 +88,7 @@ pipeline {
 
         stage('Deploy Staging') {
             when {
-                branch 'staging'
+                expression { env.BRANCH_NAME == 'staging' }
             }
             steps {
                 sh """
@@ -98,7 +105,7 @@ pipeline {
 
         stage('Approve Production') {
             when {
-                branch 'master'
+                expression { env.BRANCH_NAME == 'master' }
             }
             steps {
                 input message: 'Deploy to production?', ok: 'Deploy'
@@ -107,7 +114,7 @@ pipeline {
 
         stage('Deploy Production') {
             when {
-                branch 'master'
+                expression { env.BRANCH_NAME == 'master' }
             }
             steps {
                 sh """
