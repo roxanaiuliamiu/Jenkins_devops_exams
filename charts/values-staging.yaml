@@ -1,0 +1,25 @@
+movieService:
+  replicaCount: 1
+  env:
+    DATABASE_URI: "postgresql://movie_db_username:movie_db_password@movie-db/movie_db_staging"
+    CAST_SERVICE_HOST_URL: "http://cast-service:8000/api/v1/casts/"
+
+castService:
+  replicaCount: 1
+  env:
+    DATABASE_URI: "postgresql://cast_db_username:cast_db_password@cast-db/cast_db_staging"
+
+movieDb:
+  auth:
+    username: movie_db_username
+    password: movie_db_password
+    database: movie_db_staging
+
+castDb:
+  auth:
+    username: cast_db_username
+    password: cast_db_password
+    database: cast_db_staging
+
+ingress:
+  enabled: false

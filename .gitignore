@@ -1,4 +1,10 @@
-env
-__pycache__
-.vscode
-.idea
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/
+
+jenkins-kubeconfig
+jenkins-kube/
+*.log
+*.tmp
