@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'
-        DOCKERHUB_USERNAME = 'YOUR_DOCKERHUB_USERNAME'
+        DOCKERHUB_USERNAME = 'roxanaiuliamiu'
 
         MOVIE_IMAGE = "${DOCKERHUB_USERNAME}/movie-service"
         CAST_IMAGE  = "${DOCKERHUB_USERNAME}/cast-service"
